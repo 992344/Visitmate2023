@@ -6,6 +6,7 @@ import StudentDashbordbg from "../public/Images/studentdashboard.webp"; // Impor
 
 const StudentDashboard = () => {
   const userData = useSelector(selectUserData);
+
   return (
     <div id="wrapper">
       {/* Navbar */}
@@ -21,61 +22,34 @@ const StudentDashboard = () => {
           </div>
         </div>
       </nav>
-      {/* Sidebar */}
-      
-          
-          <div class="col py-3" style={{
-            backgroundImage: `url(${StudentDashbordbg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'right'
-          }}>
+      {/* Main Content */}
+      <div className="container-fluid" style={{
+        backgroundImage: `url(${StudentDashbordbg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'right',
+        height: '100vh', // Ensure the background covers the full height of the viewport
+        
+        
+      }}>
 
-            {/* Main Content Table of student information*/}
-            <div className="container-fluid">
-              <div className="row justify-content-center">
-                <div className="col-md-8 py-3">
-                  <h2 className="text-center text-black mb-4">Welcome {userData?.userData?.name} to the Student Dashboard!</h2>
-                  {/* Profile Table */}
-                  <div className="table-responsive">
-                    <table className="table table-bordered table-striped ">
-                      <tbody>
-                        <tr>
-                          <td className="text-black"><b>Youer Id</b></td>
-                          <td>{userData?.userData?.studentid}</td>
-                        </tr>
-                        <tr>
-                          <td className="text-black"><b>Student Name</b></td>
-                          <td>{userData?.userData?.name}</td>
-                        </tr>
-                        <tr>
-                          <td className="text-black"><b>Gender</b></td>
-                          <td>{userData?.userData?.gender}</td>
-                        </tr>
-                        <tr>
-                          <td className="text-black"><b>Email</b></td>
-                          <td>{userData?.userData?.email}</td>
-                        </tr>
-                        <tr>
-                          <td className="text-black"><b>Phone</b></td>
-                          <td>{userData?.userData?.Phno}</td>
-                        </tr>
-                        <tr>
-                          <td className="text-black"><b>Address</b></td>
-                          <td>{userData?.userData?.address}</td>
-                        </tr>
-                        <tr>
-                          <td className="text-black"><b>Department</b></td>
-                          <td>{userData?.userData?.department}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+        <div className="row justify-content-center">
+          <div className="col-md-8 py-3">
+            <h2 className=" text-white "style={{ color: 'white', fontFamily: 'Algerian' }}>Welcome {userData?.name} to the Student Dashboard!</h2>
+            <div className="card shadow-sm p-4" style={{ borderRadius: '15px', backgroundColor: 'rgba(255, 255, 255, 0.8)'}}>
+              <div className="card-body">
+                <p><strong >Student ID:  </strong>{userData?.userData?.studentid}</p>
+                <p><strong>Name:  </strong>{userData?.userData?.name}</p>
+                <p><strong>Gender:  </strong> {userData?.userData?.gender}</p>
+                <p><strong>Email:  </strong> {userData?.userData?.email}</p>
+                <p><strong>Phone:  </strong> {userData?.userData?.Phno}</p>
+                <p><strong>Address:  </strong> {userData?.userData?.address}</p>
+                <p><strong>Department: </strong> {userData?.userData?.department}</p>
               </div>
             </div>
           </div>
         </div>
-      
+      </div>
+    </div>
   );
 };
 

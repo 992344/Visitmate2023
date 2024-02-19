@@ -1,249 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import AdminDashbordbg from "../public/Images/loginbg.webp"; // Import the background image
+
 
 const AdminDashboard = () => {
-  const [students, setStudents] = useState([]);
-  const [industries, setIndustries] = useState([]);
-console.log(industries , "industries");
-/*this is the response of the indistry sate please show all industry information in  table below student table 
-Array(20)
-0
-: 
-CompanyInfo
-: 
-"Company ABC specializes in software development."
-company
-: 
-"Company ABC"
-industryid
-: 
-100
-status
-: 
-"Active"
-userid
-: 
-3
-username
-: 
-"owner1"
-*/
-  const [editingStudentId, setEditingStudentId] = useState(null);
-  const [editedStudent, setEditedStudent] = useState({
-    userid: '',
-    username: '',
-    name: '',
-    gender: '',
-    email: '',
-    Phno: '',
-    address: '',
-    department: '',
-    industryid: '',
-    status: '',
-    industryinfo: ''
-  });
 
-  useEffect(() => {
-    // Fetch students
-    axios.get('http://localhost:3001/student/get')
-      .then(response => setStudents(response.data))
-      .catch(error => console.error('Error fetching students:', error));
-
-    // Fetch industries
-    axios.get('http://localhost:3001/industry/get')
-      .then(response => setIndustries(response.data))
-      .catch(error => console.error('Error fetching industries:', error));
-  }, []);
-
-  const handleEditClick = (studentId) => {
-    setEditingStudentId(studentId);
-    const studentToEdit = students.find((student) => student.studentid === studentId);
-    setEditedStudent({ ...studentToEdit });
-  };
-
-  const handleCancelClick = () => {
-    setEditingStudentId(null);
-    setEditedStudent({
-      userid: '',
-      username: '',
-      name: '',
-      gender: '',
-      email: '',
-      Phno: '',
-      address: '',
-      department: '',
-      industryid: '',
-      status: '',
-      industryinfo: ''
-    });
-  };
-
-  const handleSaveClick = async () => {
-    try {
-      // Update only the industryid while keeping other information as it is
-      await axios.put(`http://localhost:3001/student/${editingStudentId}`, {
-        industryid: editedStudent.industryid
-        // Add other fields here as needed
-      });
-      // Refresh the student data after updating
-      axios.get('http://localhost:3001/student/get')
-        .then(response => setStudents(response.data))
-        .catch(error => console.error('Error fetching students:', error));
-      handleCancelClick();
-    } catch (error) {
-      console.error('Error updating student:', error);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setEditedStudent(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
+  
   return (
     <div id="wrapper">
-      <div id="content" className="container">
-        <h1>Welcome to the Admin Dashboard!</h1>
-        <p>Here you can manage students, schedule industry visits, and modify upcoming visits.</p>
-      </div>
-
-      <div className="container-fluid">
-        <div className="row justify-content-center">
-          <div className="col-md-8 py-3">
-            <h2 className="text-center text-black mb-4">Welcome to the Student Dashboard!</h2>
-         
-            {/* Student Table */}
-            <div className="table-responsive">
-              <table className="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Student ID</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>Department</th>
-                    <th>Industry ID</th>
-                    <th>Industry Info</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students.map((student) => (
-                    <tr key={student.studentid}>
-                      <td>{student.studentid}</td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="name" disabled value={editedStudent.name} onChange={handleInputChange} />
-                        ) : (
-                          student.name
-                        )}
-                      </td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="gender" disabled value={editedStudent.gender} onChange={handleInputChange} />
-                        ) : (
-                          student.gender
-                        )}
-                      </td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="email" disabled value={editedStudent.email} onChange={handleInputChange} />
-                        ) : (
-                          student.email
-                        )}
-                      </td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="Phno" disabled value={editedStudent.Phno} onChange={handleInputChange} />
-                        ) : (
-                          student.Phno
-                        )}
-                      </td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="address" disabled value={editedStudent.address} onChange={handleInputChange} />
-                        ) : (
-                          student.address
-                        )}
-                      </td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="department" disabled value={editedStudent.department} onChange={handleInputChange} />
-                        ) : (
-                          student.department
-                        )}
-                      </td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="industryid" value={editedStudent.industryid} onChange={handleInputChange} />
-                        ) : (
-                          student.industryid
-                        )}
-                      </td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <input type="text" name="industryinfo" disabled value={editedStudent.industryinfo} onChange={handleInputChange} />
-                        ) : (
-                          student.industryinfo
-                        )}
-                      </td>
-                      <td>{editedStudent.status}</td>
-                      <td>
-                        {editingStudentId === student.studentid ? (
-                          <>
-                            <button onClick={handleSaveClick}>Save</button>
-                            <button onClick={handleCancelClick}>Cancel</button>
-                          </>
-                        ) : (
-                          <button onClick={() => handleEditClick(student.studentid)}>Edit</button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {/* industry info */}
-<div className="table-responsive">
-  <h3>Industry Information</h3>
-  <table className="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Industry ID</th>
-        <th>Company</th>
-        <th>Status</th>
-        <th>User ID</th>
-        <th>Username</th>
-      </tr>
-    </thead>
-    <tbody>
-      {industries.map((industry) => (
-        <tr key={industry.industryid}>
-          <td>{industry.industryid}</td>
-          <td>{industry.company}</td>
-          <td>{industry.status}</td>
-          <td>{industry.userid}</td>
-          <td>{industry.username}</td>
-        </tr>
-      ))}
-    </tbody>
-  </table>
-</div>
-
-
+      
+ {/* Navbar */}
+ <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container-fluid">
+        <span className="navbar-brand ">Admin Dashboard</span>
+          <div className="navbar-nav ms-auto">
+            <a className="nav-link" href="#">Logout</a>
           </div>
         </div>
-      </div>
+      </nav>
 
+    {/* Sidebar */}
+<div class="container-fluid" style={{
+            backgroundImage: `url(${AdminDashbordbg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'right'
+          }}>
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-2 px-sm-2 px-0 bg-black">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Menu</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li>
+                            <a href="#" class="nav-link px-0 align-middle">
+                                
+                                  {/* Link to the profile page */}
+                          <Link to="/Profile" className="nav-link"><i class="fs-4 bi-person"></i>
+                          Profile</Link> </a>           
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-0 align-middle">
 
-
+                        <Link to="/Industrydata" className="nav-link"><i class="fs-4 bi-building"></i>
+                        Industry Data</Link> </a>   
+                        
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link px-0 align-middle">
+                        <Link to="/Studentdata" className="nav-link"><i class="fs-4 bi-people"></i>
+                        Student Data</Link>
+                        </a>
+                    </li>
+                </ul>
+                <hr/>
+            </div>
+        </div>
+        <div class="col py-3 text-white">
+          <h2 style={{ color: 'white', fontFamily: 'Elephant' }}>Welcome to the Admin Dashboard !</h2> 
+        </div>
     </div>
+</div>
+</div>
+    
+    
   );
 }
 

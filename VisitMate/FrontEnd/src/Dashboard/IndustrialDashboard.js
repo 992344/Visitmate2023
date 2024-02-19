@@ -66,38 +66,14 @@ const IndustrialDashboard = () => {
           <div className="col-md-8 py-3">
             <h2 className="text-center text-white mb-4">Welcome to the Industrial Dashboard!</h2>
 
-            {/* Profile Table */}
-            <div className="table-responsive">
-              <table className="table table-dark table-bordered table-striped text-white">
-                <tbody>
-                  <tr>
-                    <td className="text-white"><b>User Id</b></td>
-                    <td>{userData?.userData?.userid}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-white"><b>UserName</b></td>
-                    <td>{userData?.userData?.username}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-white"><b>CompanyName</b></td>
-                    <td>
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          name="company"
-                          value={editedIndustry.company}
-                          onChange={handleInputChange}
-                          className="form-control"
-                        />
-                      ) : (
-                        editedIndustry.company
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="text-white"><b>CompanyInfo</b></td>
-                    <td>
-                      {isEditing ? (
+            {/* Profile Card */}
+            <div className="card text-black  mb-3">
+              <div className="card-header">Industry Information</div>
+              <div className="card-body">
+                <p className="card-text"><strong>User Id:</strong> {userData?.userData?.userid}</p>
+                <p className="card-text"><strong>UserName:</strong> {userData?.userData?.username}</p>
+                <p className="card-text"><strong>CompanyName:</strong> {editedIndustry.company}</p>
+                <p className="card-text"><strong>CompanyInfo:</strong> {isEditing ? (
                         <textarea
                           name="CompanyInfo"
                           value={editedIndustry.CompanyInfo}
@@ -106,33 +82,20 @@ const IndustrialDashboard = () => {
                         />
                       ) : (
                         editedIndustry.CompanyInfo
-                      )}
-                    </td>
-                  </tr>
-                  {/* Add more rows as needed */}
-                </tbody>
-              </table>
+                      )}</p>
+              </div>
+              <div className="card-footer text-center">
+                {isEditing ? (
+                  <div>
+                    <button type="button" className="btn btn-primary" onClick={handleSaveClick}>Save</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleCancelClick}>Cancel</button>
+                  </div>
+                ) : (
+                  <button type="button" className="btn btn-white" onClick={handleEditClick}><b>Edit Information</b></button>
+                )}
+              </div>
             </div>
-            {/* End of Profile Table */}
-            
-            {/* Buttons */}
-            {isEditing ? (
-              <div className="text-center text-white">
-                <button type="button" className="btn btn-primary" onClick={handleSaveClick}>
-                  Save
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={handleCancelClick}>
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <div className="text-center text-white">
-                <button type="button" className="btn btn-white" onClick={handleEditClick}>
-                  <b>Edit Information</b>
-                </button>
-              </div>
-            )}
-            {/* End of Buttons */}
+            {/* End of Profile Card */}
           </div>
         </div>
       </div>

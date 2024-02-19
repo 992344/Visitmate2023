@@ -4,43 +4,41 @@ import axios from "axios";
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../Slice/userSlice';
 import loginbg from "../public/Images/loginbg.webp"; // Import the background image
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState("");
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const handleLogin = async (e) => {
-    
     e.preventDefault();
 
     try {
       const response = await axios.post("http://localhost:3001/login/validate", {
         username,
         password,
-      });           //response of this axios.post i want to use in that perticular dashboard page using redux toolkit please help me for that 
-         console.log(response, "loginresponse");
-        
-      
+      });
+
+      console.log(response, "loginresponse");
+
       if (response.data.message === "Login successful") {
-       
         const userRole = response?.data?.data?.userRole;
         dispatch(setUserData(response?.data?.data));
-       // localStorage.setItem( "user", response);
-        //here why i am getting value [object object] why not getting proprer response 
-        navigate(`/${userRole}` );
-
+        navigate(`/${userRole}`);
+      } else {
+        setError(response.data.error || "An unexpected error occurred. Please try again later.");
       }
     } catch (error) {
       console.error("Login error:", error);
+      setError("An error occurred while logging in. Please try again later.");
     }
   };
 
   return (
-
     <>
-
       <section className="vh-100 gradient-custom" 
        style={{
         backgroundImage: `url(${loginbg})`,
@@ -65,6 +63,7 @@ function Login() {
                     <p className="text-white-50 mb-4">
                       Please enter your login and password!
                     </p>
+                    {error && <p className="text-danger mb-3">{error}</p>}
                     <form onSubmit={handleLogin}>
                       <div className="form-outline form-white mb-2">
                         <input
@@ -109,7 +108,6 @@ function Login() {
           </div>
         </div>
       </section>
-      
     </>
   );
 }

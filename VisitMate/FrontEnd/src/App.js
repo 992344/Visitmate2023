@@ -10,6 +10,8 @@ import AdminDashboard from "./Dashboard/AdminDashboard";
 import IndustrialDashboard from "./Dashboard/IndustrialDashboard";
 import Profile from "./Dashboard/Profile";
 import IndustryPage from "./Dashboard/Industrypage";
+import Industrydata from "./Dashboard/Industrydata";
+import Studentdata from "./Dashboard/studentdata";
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
               <Route path="/profile" element={<Profile/>} />
               <Route path="/industrydashboard" element={<IndustrialDashboard/>} />
               <Route path="/Industrypage" element={<IndustryPage/>} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/Industrydata" element={<Industrydata/>} />
+              <Route path="/Studentdata" element={<Studentdata/>} />
             </Routes>
           </>
   );
