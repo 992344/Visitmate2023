@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from 'react-redux';
-import { setUserData } from '../Slice/userSlice';
+import { useDispatch } from "react-redux";
+import { setUserData } from "../Slice/userSlice";
 import loginbg from "../public/Images/loginbg.webp"; // Import the background image
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3001/login/validate", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:3001/login/validate",
+        {
+          username,
+          password,
+        }
+      );
 
       console.log(response, "loginresponse");
 
@@ -29,7 +32,10 @@ function Login() {
         dispatch(setUserData(response?.data?.data));
         navigate(`/${userRole}`);
       } else {
-        setError(response.data.error || "An unexpected error occurred. Please try again later.");
+        setError(
+          response.data.error ||
+            "An unexpected error occurred. Please try again later."
+        );
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -39,68 +45,83 @@ function Login() {
 
   return (
     <>
-      <section className="vh-100 gradient-custom" 
-       style={{
-        backgroundImage: `url(${loginbg})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'right'
-      }}>
-        <div className="container py-4 h-80">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-              <div
-                className="card text-white"
-                style={{
-                  borderRadius: "1rem",
-                  backgroundColor: "#333531",
-                  boxShadow: "0px 25px 80px rgba(0, 0, 0, 0.5)",
-                  
-                }}
-              >
-                <div className="card-body p-4 text-center">
-                  <div className="mb-md-1 mt-md-2 pb-2">
-                    <h2 className="fw-bold mb-2 text-uppercase">Login</h2>
-                    <p className="text-white-50 mb-4">
-                      Please enter your login and password!
-                    </p>
-                    {error && <p className="text-danger mb-3">{error}</p>}
-                    <form onSubmit={handleLogin}>
-                      <div className="form-outline form-white mb-2">
-                        <input
-                          type="text"
-                          id="username"
-                          className="form-control form-control-lg"
-                          value={username}
-                          onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <label className="form-label" htmlFor="typeEmailX">
-                          Username
-                        </label>
-                      </div>
-                      <div className="form-outline form-white mb-2">
-                        <input
-                          type="password"
-                          id="typePasswordX"
-                          className="form-control form-control-lg"
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <label className="form-label" htmlFor="typePasswordX">
-                          Password
-                        </label>
-                      </div>
-                      <p className="small mb-2 pb-lg-1">
-                        <Link className="text-white-50" to="#">
-                          Forgot password?
-                        </Link>
-                      </p>
-                      <button
-                        className="btn btn-outline-light btn-lg px-5"
-                        type="submit"
-                      >
+      <section
+        className="vh-100 gradient-custom"
+        // style={{
+        //   // backgroundImage: `url(${loginbg})`,
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "right",
+        // }}
+      >
+        <div className="container h-80">
+          <div className="row d-flex justify-content-center align-items-center h-100 pt-1">
+            <div class="col-lg-12 col-xl-11">
+              <div class="card text-black">
+                <div class="card-body p-md-5">
+                  <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                      <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                         Login
-                      </button>
-                    </form>
+                      </p>
+                      <p className="text-center mb-4">
+                        Please enter your login and password!
+                      </p>
+                      {error && <p className="text-danger mb-3">{error}</p>}
+
+                      <form onSubmit={handleLogin} class="mx-1 mx-md-4">
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+
+                          <div class="form-outline flex-fill mb-0">
+                            <label class="form-label" for="form3Example3c">
+                              Username
+                            </label>
+                            <input
+                              type="text"
+                              id="form3Example3c"
+                              class="form-control form-control-lg"
+                              value={username}
+                              onChange={(e) => setUsername(e.target.value)}
+                            />
+                          </div>
+                        </div>
+
+                        <div class="d-flex flex-row align-items-center mb-4">
+                          <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                          <div class="form-outline flex-fill mb-0">
+                            <label class="form-label" for="form3Example4c">
+                              Password
+                            </label>
+                            <input
+                              type="password"
+                              id="form3Example4c"
+                              class="form-control form-control-lg"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                            />
+                          </div>
+                        </div>
+
+                        <div class="d-flex">
+                          <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                            <button
+                              type="submit"
+                              class="btn btn-primary btn-lg"
+                            >
+                              <a class="link-info login_button_register">
+                                Login
+                              </a>
+                            </button>
+                          </div>
+                        </div>
+
+                        <p class="small mb-5 pb-lg-2">
+                          <a class="text-muted" href="#!">
+                            Forgot password?
+                          </a>
+                        </p>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
