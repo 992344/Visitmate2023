@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.left-panel {
+  border-radius: 30px;
+  height: 100vh !important;
+}
+
+/* .aa {
+  background-image: url('src/public/Images/login-1.jpg');
+    background-size: cover;
+    background-position: right;
+} */
