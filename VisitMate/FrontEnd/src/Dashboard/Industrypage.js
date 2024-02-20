@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { selectUserData } from '../Slice/userSlice';
-import "../Style/industry.css";
+import "../Style/industrypage.css";
 
 const Industrypage = () => {
   const userData = useSelector(selectUserData);
